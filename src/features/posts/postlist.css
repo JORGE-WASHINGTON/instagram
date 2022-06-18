@@ -1,0 +1,105 @@
+.wrapper {
+  display: flex;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 470px;
+  margin: 0 auto;
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.post-header {
+  display: flex;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  margin: 8px 12px;
+  margin-right: 4px;
+  align-items: center;
+}
+
+.post-header span {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.post-header img {
+  height: 100%;
+  width: 100%;
+}
+
+.post-image {
+  display: flex;
+}
+
+.post-image img {
+  height: 100%;
+  width: 100%;
+}
+
+.post-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-buttons {
+  padding: 0 12px;
+  display: flex;
+  background: transparent;
+}
+
+.like-icon {
+  animation-duration: 0.45s;
+  animation-name: like-button-animation;
+  animation-timing-function: ease-in-out;
+  transform: scale(1);
+  cursor: pointer;
+}
+
+.like-icon button {
+  border: none;
+  cursor: pointer;
+  justify-content: center;
+  padding: 8px;
+}
+
+.like-icon button div:first-child {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.like-icon button div:last-child {
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes like-button-animation {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

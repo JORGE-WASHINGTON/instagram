@@ -1,0 +1,23 @@
+nav {
+  background-color: #fff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.nav-container {
+  display: flex;
+  padding: 0px 20px;
+  max-width: 975px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.logo {
+  background-image: url("https://static.cdninstagram.com/rsrc.php/v3/yA/r/RBO0njy-_Rl.png");
+  background-position: 0 -324px;
+  display: block;
+  width: 103px;
+  height: 29px;
+}
