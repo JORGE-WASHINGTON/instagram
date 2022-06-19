@@ -3,7 +3,8 @@ nav {
   height: 60px;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgb(209, 208, 208);
 }
 
 .nav-container {
