@@ -17,3 +17,7 @@ h2 {
   color: #262626;
   font-weight: 500;
 }
+
+li {
+  list-style: none;
+}

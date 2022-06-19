@@ -18,19 +18,27 @@
 .singlepostpage-section article {
   display: flex;
   justify-content: center;
-
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(219, 219, 219);
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
-  max-width: 100%;
+  width: 100%;
 }
 
 .image-container {
   background-color: rgb(250, 250, 250);
   min-height: 450px;
-  overflow: hidden;
   flex-grow: 1;
+}
+
+.image-container img {
+  display: block;
+  width: 100%;
+}
+
+.singlepostpage-details {
+  width: 335px;
+  flex-shrink: 0;
 }
 
 .details-header {
@@ -48,4 +56,48 @@
   padding: 16px;
   display: flex;
   max-width: 100%;
+  flex-direction: column;
+}
+
+.details-content-post-content {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.details-content div span {
+  font-weight: 500;
+}
+
+.details-content span:first-of-type {
+  flex-shrink: 0;
+}
+
+.comment-list {
+  box-sizing: content-box;
+  flex-grow: 1;
+  height: 350px;
+  overflow-y: scroll;
+}
+
+.comment-list::-webkit-scrollbar {
+  display: none;
+}
+
+.comment-list li {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.details-actions {
+  border-top: 1px solid #eeeeee;
+  padding: 0 16px;
+}
+
+.likes-information {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+
+.likes-information span {
+  font-weight: 500;
 }
