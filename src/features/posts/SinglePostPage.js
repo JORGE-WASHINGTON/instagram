@@ -5,7 +5,7 @@ import { selectPostById } from "./postsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserById } from "../users/usersSlice";
 import Avatar from "../../components/Avatar";
-import { addCommentToPost, addLikeToPost } from "./postsSlice";
+import { addCommentToPost, addLike } from "./postsSlice";
 import { useState } from "react";
 
 const Comment = ({ userId, users, comment }) => {
@@ -38,7 +38,7 @@ const SinglePostPage = () => {
 
   const onLikeClicked = () => {
     console.log("like hit");
-    dispatch(addLikeToPost({ post: Number(postId), user: 6 }));
+    dispatch(addLike({ post: Number(postId), user: 6 }));
   };
 
   const onSaveCommentClicked = () => {

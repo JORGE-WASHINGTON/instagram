@@ -7,14 +7,26 @@ import { selectUserById } from "../users/usersSlice";
 import Avatar from "../../components/Avatar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { IconContext } from "react-icons";
+import { addLike, removeLike } from "./postsSlice";
+import { useDispatch } from "react-redux";
 
-const Post = ({ post }) => {
+const Post = ({ post, currentUser }) => {
   const user = useSelector((state) => selectUserById(state, post.user));
   const users = useSelector((state) => state.users);
   const whoLiked = post.likedBy.map((like) => {
     const user = users.find((user) => user.id === like);
     return { name: user.name, avatar: user.avatar };
   });
+
+  const isLiked = post.likedBy.includes(currentUser);
+  console.log(isLiked, post.id);
+  const dispatch = useDispatch();
+
+  const onLikeClick = (isLiked) => {
+    isLiked
+      ? dispatch(removeLike({ post: post.id, currentUser }))
+      : dispatch(addLike({ post: post.id, currentUser }));
+  };
 
   return (
     <article className="post">
@@ -30,9 +42,9 @@ const Post = ({ post }) => {
       <div className="post-details">
         <div className="details-buttons">
           <span className="like-icon">
-            <button>
+            <button onClick={() => onLikeClick(isLiked)}>
               <svg
-                className="svgtag"
+                className={isLiked ? "liked" : undefined}
                 height="24"
                 viewBox="0 0 24 24"
                 width="24"
@@ -43,9 +55,9 @@ const Post = ({ post }) => {
           </span>
           <span className="like-icon">
             <button>
-              <IconContext.Provider value={{ size: "2em", color: "red" }}>
-                <AiOutlineHeart />
-              </IconContext.Provider>
+              {/* <IconContext.Provider value={{ size: "2em" }}> */}
+              <AiOutlineHeart className="icon" />
+              {/* </IconContext.Provider> */}
               {/* <svg
                 className="svgtag"
                 height="24"
@@ -124,12 +136,15 @@ const Post = ({ post }) => {
 
 const PostList = () => {
   const [isOverflow, setIsOverflow] = useState(false);
-
-  const posts = useSelector((state) => state.posts);
+  const currentUser = 1;
+  const posts = useSelector((state) =>
+    state.posts.filter((post) => post.user !== currentUser)
+  );
   const users = useSelector((state) => state.users);
-  console.log(users);
 
-  const renderedPosts = posts.map((post) => <Post post={post} key={post.id} />);
+  const renderedPosts = posts.map((post) => (
+    <Post currentUser={currentUser} post={post} key={post.id} />
+  ));
 
   return (
     <div className="wrapper">

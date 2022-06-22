@@ -35,7 +35,7 @@ const initialState = [
     id: 3,
     date: new Date().toISOString(),
     image: "image3.jpg",
-    likedBy: [1, 3, 4, 5],
+    likedBy: [3, 4, 5],
     user: 2,
     description: "A post description",
     comments: [
@@ -50,7 +50,7 @@ const initialState = [
     id: 4,
     date: new Date().toISOString(),
     image: "image10.jpg",
-    likedBy: [1, 3, 4, 5],
+    likedBy: [3, 4, 5],
     user: 2,
     description: "A post description",
     comments: [
@@ -163,10 +163,20 @@ const postSlice = createSlice({
         post.comments.push(action.payload);
       }
     },
-    addLikeToPost(state, action) {
+    addLike(state, action) {
       const post = state.find((post) => post.id === action.payload.post);
       if (post) {
-        post.likedBy.push(action.payload.user);
+        post.likedBy.push(action.payload.currentUser);
+      }
+    },
+    removeLike(state, action) {
+      const post = state.find((post) => post.id === action.payload.post);
+      console.log(post);
+      console.log(action.payload);
+      if (post) {
+        post.likedBy = post.likedBy.filter(
+          (like) => like !== action.payload.currentUser
+        );
       }
     },
   },
@@ -176,6 +186,6 @@ export const selectPostById = (state, postId) => {
   return state.posts.find((post) => post.id === postId);
 };
 
-export const { addCommentToPost, addLikeToPost } = postSlice.actions;
+export const { addCommentToPost, addLike, removeLike } = postSlice.actions;
 
 export default postSlice.reducer;

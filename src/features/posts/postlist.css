@@ -132,6 +132,18 @@
   margin-right: 8px;
 }
 
+/* .icon {
+  color: red;
+  width: 2em;
+  height: 2em;
+  transition: width 1s;
+}
+
+.icon:active {
+  width: 3em;
+  
+} */
+
 .like-icon button {
   display: flex;
   align-items: center;
@@ -142,12 +154,32 @@
   border: none;
 }
 
-.svgtag {
+.liked {
+  fill: red;
+}
+
+/* .svgtag {
   fill: #262626;
+  height: 24px;
+  width: auto;
+  transition: height ease-in-out;
 }
 
 .svgtag:hover {
   fill: #8e8e8e;
+}
+
+.svgtag:active {
+  fill: red;
+  height: 26px;
+} */
+
+.icon {
+  height: 2em;
+  width: 2em;
+  fill: blue;
+  stroke: red;
+  stroke-width: 1;
 }
 
 @keyframes like-button-animation {
