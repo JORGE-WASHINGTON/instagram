@@ -30,7 +30,8 @@ li {
 }
 
 input,
-textarea {
+textarea,
+button {
   font-family: inherit;
   font-size: inherit;
 }

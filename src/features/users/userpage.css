@@ -27,6 +27,33 @@
   flex-basis: 30px;
   flex-shrink: 1;
   justify-content: space-evenly;
+  overflow: hidden;
+}
+
+.profile-page-info-header {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  flex-shrink: 1;
+}
+
+.profile-page-info-header h1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.profile-page-info-header button {
+  padding: 0 24px;
+  background-color: rgb(0, 149, 246);
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  color: white;
+  height: 100%;
+  font-weight: 600;
+  margin-left: 20px;
+  margin-right: 8px;
 }
 
 .profile-page-stats li {

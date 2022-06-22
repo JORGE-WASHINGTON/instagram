@@ -8,6 +8,8 @@ const UserPage = () => {
   const user = useSelector((state) =>
     state.users.find((user) => user.name === username)
   );
+  const currentUser = 1;
+
   return (
     <section className="profile-page-container">
       <div className="profile-page-infocontainer">
@@ -15,7 +17,14 @@ const UserPage = () => {
           <img src={user.avatar} alt="" />
         </div>
         <div className="profile-page-userinfo">
-          <h1>{username}</h1>
+          <div className="profile-page-info-header">
+            <h1>
+              Livia Moara Silva do Nascimento ola que talLivia Moara Silva do
+              Nascimento ola que tal
+            </h1>
+            <button>Follow</button>
+          </div>
+
           <ul className="profile-page-stats">
             <li>
               <span>{user.posts.length}</span> posts
