@@ -10,10 +10,13 @@ import {
   AiFillHeart,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { IconContext } from "react-icons";
 
 const NavBar = () => {
+  const currentUser = useSelector((state) => state.users[0]);
+
   return (
     <nav>
       <div className="nav-container">
@@ -54,9 +57,12 @@ const NavBar = () => {
               <AiOutlineHeart />
             </IconContext.Provider>
           </button>
+
           <button className="navigation-buttons">
-            <IconContext.Provider value={{ size: "2em" }}>
-              <AiOutlineUser />
+            <IconContext.Provider value={{ size: "2em", color: "black" }}>
+              <Link to={`/${currentUser.name}`}>
+                <AiOutlineUser />
+              </Link>
             </IconContext.Provider>
           </button>
         </div>
