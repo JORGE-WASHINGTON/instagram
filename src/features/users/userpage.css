@@ -42,3 +42,22 @@
 .profile-page-media-container {
   border-top: 1px solid #e0e0e0;
 }
+
+.profile-page-media-options {
+  display: flex;
+  justify-content: center;
+  height: 56px;
+  align-items: center;
+  color: #8e8e8e;
+}
+
+.profile-page-media-options span {
+  margin-right: 60px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.selected {
+  color: rgb(38, 38, 38);
+  font-weight: 700;
+}

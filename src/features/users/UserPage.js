@@ -18,19 +18,25 @@ const UserPage = () => {
           <h1>{username}</h1>
           <ul className="profile-page-stats">
             <li>
-              <span>0</span> posts
+              <span>{user.posts.length}</span> posts
             </li>
             <li>
-              <span>79</span> followers
+              <span>{user.followers.length}</span> followers
             </li>
             <li>
-              <span>53</span> following
+              <span>{user.following.length}</span> following
             </li>
           </ul>
           <h2>{username}</h2>
         </div>
       </div>
-      <div className="profile-page-media-container"></div>
+      <div className="profile-page-media-container">
+        <div className="profile-page-media-options">
+          <span className="selected">POSTS</span>
+          <span>SAVED</span>
+          <span>TAGGED</span>
+        </div>
+      </div>
     </section>
   );
 };
