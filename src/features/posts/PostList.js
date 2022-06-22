@@ -23,7 +23,7 @@ const Post = ({ post }) => {
         <h2>{user.name}</h2>
       </div>
       <div className="post-image">
-        <Link to={`/posts/${post.id}`}>
+        <Link to={`/p/${post.id}`}>
           <img src={post.image} alt="Author Avatar" />
         </Link>
       </div>

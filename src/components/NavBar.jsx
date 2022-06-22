@@ -7,7 +7,9 @@ import {
   AiOutlineMessage,
   AiOutlinePlusCircle,
   AiOutlineCompass,
+  AiFillHeart,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 import { IconContext } from "react-icons";
 
@@ -16,17 +18,22 @@ const NavBar = () => {
     <nav>
       <div className="nav-container">
         <div className="logo-container">
-          <div className="logo"></div>
+          <Link to="/">
+            <div className="logo"></div>
+          </Link>
         </div>
         <div className="search">
           <input type="text" placeholder="Search" />
         </div>
         <div className="navigation">
-          <button className="navigation-buttons">
-            <IconContext.Provider value={{ size: "2em" }}>
-              <AiFillHome />
-            </IconContext.Provider>
-          </button>
+          <Link to="/">
+            <button className="navigation-buttons">
+              <IconContext.Provider value={{ size: "2em" }}>
+                <AiFillHome />
+              </IconContext.Provider>
+            </button>
+          </Link>
+
           <button className="navigation-buttons">
             <IconContext.Provider value={{ size: "2em" }}>
               <AiOutlineMessage />
