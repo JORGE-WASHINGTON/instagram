@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import "./userpage.css";
 import { useSelector } from "react-redux";
-import { followUser } from "./usersSlice";
+import { followUser, unfollowUser } from "./usersSlice";
 import { useDispatch } from "react-redux";
 
 const UserPage = () => {
@@ -10,12 +10,16 @@ const UserPage = () => {
   const user = useSelector((state) =>
     state.users.find((user) => user.name === username)
   );
-
-  const dispatch = useDispatch();
   const currentUser = 1;
 
-  const onFollowClick = () => {
-    dispatch(followUser({ followedUser: user.id, currentUser }));
+  const isFollowed = user.followers.includes(currentUser);
+
+  const dispatch = useDispatch();
+
+  const onFollowClick = (isFollowed) => {
+    isFollowed
+      ? dispatch(unfollowUser({ unfollowedUser: user.id, currentUser }))
+      : dispatch(followUser({ followedUser: user.id, currentUser }));
   };
 
   return (
@@ -30,7 +34,12 @@ const UserPage = () => {
               Livia Moara Silva do Nascimento ola que talLivia Moara Silva do
               Nascimento ola que tal
             </h1>
-            <button onClick={onFollowClick}>Follow</button>
+            <button
+              className={isFollowed ? "unfollow-button" : "follow-button"}
+              onClick={() => onFollowClick(isFollowed)}
+            >
+              Follow
+            </button>
           </div>
 
           <ul className="profile-page-stats">

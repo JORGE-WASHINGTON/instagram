@@ -78,10 +78,25 @@ const usersSlice = createSlice({
       currentUser.following.push(action.payload.followedUser);
       followedUser.followers.push(action.payload.currentUser);
     },
+    unfollowUser(state, action) {
+      const currentUser = state.find(
+        (user) => user.id === action.payload.currentUser
+      );
+      const unfollowedUser = state.find(
+        (user) => user.id === action.payload.unfollowedUser
+      );
+
+      currentUser.following = currentUser.following.filter(
+        (user) => user !== action.payload.unfollowedUser
+      );
+      unfollowedUser.followers = unfollowedUser.followers.filter(
+        (user) => user !== action.payload.currentUser
+      );
+    },
   },
 });
 
-export const { followUser } = usersSlice.actions;
+export const { followUser, unfollowUser } = usersSlice.actions;
 
 export const selectUserById = (state, userId) => {
   return state.users.find((user) => user.id === userId);
