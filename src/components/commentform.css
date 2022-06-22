@@ -1,0 +1,37 @@
+.post-comment {
+  border-top: 1px solid rgb(239, 239, 239);
+  padding: 4px 11px;
+  display: flex;
+  align-items: center;
+}
+
+.post-comment form {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.post-comment form button {
+  padding: 12px 0;
+  background: none;
+  outline: none;
+  border: none;
+  color: rgb(0, 149, 246);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.post-comment textarea {
+  display: flex;
+  height: 18px;
+  flex-grow: 1;
+  outline: none;
+  border: none;
+  background: none;
+  color: rgb(38, 38, 38);
+  max-height: 80px;
+  resize: none;
+  line-height: 18px;
+  overflow-y: hidden;
+}

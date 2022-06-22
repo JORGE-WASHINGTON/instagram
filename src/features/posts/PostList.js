@@ -9,6 +9,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { addLike, removeLike } from "./postsSlice";
 import { useDispatch } from "react-redux";
+import CommentForm from "../../components/CommentForm";
 
 const Post = ({ post, currentUser }) => {
   const user = useSelector((state) => selectUserById(state, post.user));
@@ -119,8 +120,8 @@ const Post = ({ post, currentUser }) => {
           <p>{post.date}</p>
         </div>
       </div>
-
-      <div className="post-comment">
+      <CommentForm />
+      {/*  <div className="post-comment">
         <form>
           <textarea
             autoComplete="off"
@@ -129,7 +130,7 @@ const Post = ({ post, currentUser }) => {
           />
           <button disabled>Publish</button>
         </form>
-      </div>
+      </div> */}
     </article>
   );
 };

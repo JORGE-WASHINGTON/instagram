@@ -7,6 +7,7 @@ import { selectUserById } from "../users/usersSlice";
 import Avatar from "../../components/Avatar";
 import { addCommentToPost, addLike } from "./postsSlice";
 import { useState } from "react";
+import CommentForm from "../../components/CommentForm";
 
 const Comment = ({ userId, users, comment }) => {
   const user = users.find((user) => user.id === userId);
@@ -25,14 +26,15 @@ const Comment = ({ userId, users, comment }) => {
 const SinglePostPage = () => {
   const { postId } = useParams();
   const post = useSelector((state) => selectPostById(state, Number(postId)));
+  console.log(typeof post.id);
   const user = useSelector((state) => selectUserById(state, post.user));
   const users = useSelector((state) => state.users);
 
-  const [comment, setComment] = useState("");
+  /* const [comment, setComment] = useState("");
 
   const onCommentChange = (e) => {
     setComment(e.target.value);
-  };
+  }; */
 
   const dispatch = useDispatch();
 
@@ -41,7 +43,7 @@ const SinglePostPage = () => {
     dispatch(addLike({ post: Number(postId), user: 6 }));
   };
 
-  const onSaveCommentClicked = () => {
+  /* const onSaveCommentClicked = () => {
     console.log("hit");
     if (comment) {
       dispatch(
@@ -54,7 +56,7 @@ const SinglePostPage = () => {
       );
     }
     setComment("");
-  };
+  }; */
 
   const renderedComments = post.comments.map((comment, i) => (
     <Comment
@@ -163,7 +165,8 @@ const SinglePostPage = () => {
                 Liked by <span>someone</span> and <span>other people</span>
               </p>
             </div>
-            <div className="post-comment">
+            <CommentForm postId={post.id} />
+            {/* <div className="post-comment">
               <form>
                 <textarea
                   onChange={onCommentChange}
@@ -175,7 +178,7 @@ const SinglePostPage = () => {
                   Publish
                 </button>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </article>
