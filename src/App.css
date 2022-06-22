@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* outline: 1px solid red; */
 }
 
 body {
@@ -20,4 +21,10 @@ h2 {
 
 li {
   list-style: none;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
 }

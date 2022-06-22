@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectUserById } from "../users/usersSlice";
 import Avatar from "../../components/Avatar";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { IconContext } from "react-icons";
 
 const Post = ({ post }) => {
   const user = useSelector((state) => selectUserById(state, post.user));
@@ -41,7 +43,10 @@ const Post = ({ post }) => {
           </span>
           <span className="like-icon">
             <button>
-              <svg
+              <IconContext.Provider value={{ size: "2em", color: "red" }}>
+                <AiOutlineHeart />
+              </IconContext.Provider>
+              {/* <svg
                 className="svgtag"
                 height="24"
                 viewBox="0 0 24 24"
@@ -54,7 +59,7 @@ const Post = ({ post }) => {
                   strokeLinejoin="round"
                   strokeWidth="2"
                 ></path>
-              </svg>
+              </svg> */}
             </button>
           </span>
           <span className="like-icon">

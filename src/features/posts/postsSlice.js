@@ -9,7 +9,11 @@ const initialState = [
     user: 1,
     description: "A post description",
     comments: [
-      { comment_user: 2, content: "Comment from user Jorge on post id 1" },
+      {
+        id: 1,
+        comment_user: 2,
+        content: "Comment from user Jorge on post id 1",
+      },
     ],
   },
   {
@@ -20,7 +24,11 @@ const initialState = [
     user: 1,
     description: "A post description",
     comments: [
-      { comment_user: 4, content: "Comment from user Barb on post id 2" },
+      {
+        id: 2,
+        comment_user: 4,
+        content: "Comment from user Barb on post id 2",
+      },
     ],
   },
   {
@@ -31,7 +39,11 @@ const initialState = [
     user: 2,
     description: "A post description",
     comments: [
-      { comment_user: 4, content: "Comment from user Barb on post id 3" },
+      {
+        id: 3,
+        comment_user: 4,
+        content: "Comment from user Barb on post id 3",
+      },
     ],
   },
   {
@@ -42,7 +54,11 @@ const initialState = [
     user: 2,
     description: "A post description",
     comments: [
-      { comment_user: 3, content: "Comment from user Livia on post id 4" },
+      {
+        id: 4,
+        comment_user: 3,
+        content: "Comment from user Livia on post id 4",
+      },
     ],
   },
   {
@@ -53,7 +69,11 @@ const initialState = [
     user: 3,
     description: "A post description",
     comments: [
-      { comment_user: 1, content: "Comment from user Gabi on post id 5" },
+      {
+        id: 5,
+        comment_user: 1,
+        content: "Comment from user Gabi on post id 5",
+      },
     ],
   },
   {
@@ -64,7 +84,11 @@ const initialState = [
     user: 3,
     description: "A post description",
     comments: [
-      { comment_user: 5, content: "Comment from user Dudu on post id 6" },
+      {
+        id: 6,
+        comment_user: 5,
+        content: "Comment from user Dudu on post id 6",
+      },
     ],
   },
   {
@@ -75,7 +99,11 @@ const initialState = [
     user: 4,
     description: "A post description",
     comments: [
-      { comment_user: 5, content: "Comment from user Dudu on post id 7" },
+      {
+        id: 7,
+        comment_user: 5,
+        content: "Comment from user Dudu on post id 7",
+      },
     ],
   },
   {
@@ -86,7 +114,11 @@ const initialState = [
     user: 4,
     description: "A post description",
     comments: [
-      { comment_user: 3, content: "Comment from user Livia on post id 8" },
+      {
+        id: 8,
+        comment_user: 3,
+        content: "Comment from user Livia on post id 8",
+      },
     ],
   },
   {
@@ -97,7 +129,11 @@ const initialState = [
     user: 5,
     description: "A post description",
     comments: [
-      { comment_user: 2, content: "Comment from user Jorge on post id 9" },
+      {
+        id: 9,
+        comment_user: 2,
+        content: "Comment from user Jorge on post id 9",
+      },
     ],
   },
   {
@@ -108,7 +144,11 @@ const initialState = [
     user: 5,
     description: "A post description",
     comments: [
-      { comment_user: 1, content: "Comment from user Gabi on post id 10" },
+      {
+        id: 10,
+        comment_user: 1,
+        content: "Comment from user Gabi on post id 10",
+      },
     ],
   },
 ];
@@ -116,11 +156,26 @@ const initialState = [
 const postSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    addCommentToPost(state, action) {
+      const post = state.find((post) => post.id === action.payload.post);
+      if (post) {
+        post.comments.push(action.payload);
+      }
+    },
+    addLikeToPost(state, action) {
+      const post = state.find((post) => post.id === action.payload.post);
+      if (post) {
+        post.likedBy.push(action.payload.user);
+      }
+    },
+  },
 });
 
 export const selectPostById = (state, postId) => {
   return state.posts.find((post) => post.id === postId);
 };
+
+export const { addCommentToPost, addLikeToPost } = postSlice.actions;
 
 export default postSlice.reducer;

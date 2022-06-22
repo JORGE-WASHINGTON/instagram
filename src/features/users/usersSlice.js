@@ -9,8 +9,8 @@ const initialState = [
     followers: [2, 3, 4, 5],
     posts: [1, 2],
     comments: [
-      { post: 10, content: "Comment from user Gabi on post id 10" },
-      { post: 5, content: "Comment from user Gabi on post id 5" },
+      { id: 10, post: 10, content: "Comment from user Gabi on post id 10" },
+      { id: 5, post: 5, content: "Comment from user Gabi on post id 5" },
     ],
   },
   {
@@ -21,8 +21,8 @@ const initialState = [
     following: [1, 3, 4, 5],
     followers: [1, 3, 4, 5],
     comments: [
-      { post: 9, content: "Comment from user Jorge on post id 9" },
-      { post: 1, content: "Comment from user Jorge on post id 1" },
+      { id: 9, post: 9, content: "Comment from user Jorge on post id 9" },
+      { id: 1, post: 1, content: "Comment from user Jorge on post id 1" },
     ],
   },
   {
@@ -33,8 +33,8 @@ const initialState = [
     following: [1, 2, 4, 5],
     followers: [1, 2, 4, 5],
     comments: [
-      { post: 8, content: "Comment from user Livia on post id 8" },
-      { post: 4, content: "Comment from user Livia on post id 4" },
+      { id: 8, post: 8, content: "Comment from user Livia on post id 8" },
+      { id: 4, post: 4, content: "Comment from user Livia on post id 4" },
     ],
   },
   {
@@ -45,8 +45,8 @@ const initialState = [
     followers: [1, 3, 2, 5],
     avatar: "avatar4.jpg",
     comments: [
-      { post: 3, content: "Comment from user Barb on post id 3" },
-      { post: 2, content: "Comment from user Barb on post id 2" },
+      { id: 3, post: 3, content: "Comment from user Barb on post id 3" },
+      { id: 2, post: 2, content: "Comment from user Barb on post id 2" },
     ],
   },
   {
@@ -57,8 +57,8 @@ const initialState = [
     followers: [1, 3, 4, 2],
     avatar: "avatar5.jpg",
     comments: [
-      { post: 6, content: "Comment from user Dudu on post id 6" },
-      { post: 7, content: "Comment from user Dudu on post id 7" },
+      { id: 6, post: 6, content: "Comment from user Dudu on post id 6" },
+      { id: 7, post: 7, content: "Comment from user Dudu on post id 7" },
     ],
   },
 ];
@@ -66,7 +66,11 @@ const initialState = [
 const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    /* addCommentToUser(state, action) {
+      state.users
+    }  */
+  },
 });
 
 export const selectUserById = (state, userId) => {
