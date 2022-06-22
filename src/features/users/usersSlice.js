@@ -5,8 +5,8 @@ const initialState = [
     id: 1,
     avatar: "avatar1.jpg",
     name: "Gabi",
-    following: [2, 3, 4, 5],
-    followers: [2, 3, 4, 5],
+    following: [],
+    followers: [],
     posts: [1, 2],
     comments: [
       { id: 10, post: 10, content: "Comment from user Gabi on post id 10" },
@@ -18,8 +18,8 @@ const initialState = [
     avatar: "avatar2.jpg",
     name: "Jorge",
     posts: [3, 4],
-    following: [1, 3, 4, 5],
-    followers: [1, 3, 4, 5],
+    following: [],
+    followers: [],
     comments: [
       { id: 9, post: 9, content: "Comment from user Jorge on post id 9" },
       { id: 1, post: 1, content: "Comment from user Jorge on post id 1" },
@@ -30,8 +30,8 @@ const initialState = [
     name: "Livia",
     avatar: "avatar3.jpg",
     posts: [5, 6],
-    following: [1, 2, 4, 5],
-    followers: [1, 2, 4, 5],
+    following: [],
+    followers: [],
     comments: [
       { id: 8, post: 8, content: "Comment from user Livia on post id 8" },
       { id: 4, post: 4, content: "Comment from user Livia on post id 4" },
@@ -41,8 +41,8 @@ const initialState = [
     id: 4,
     name: "Barb",
     posts: [7, 8],
-    following: [1, 3, 2, 5],
-    followers: [1, 3, 2, 5],
+    following: [],
+    followers: [],
     avatar: "avatar4.jpg",
     comments: [
       { id: 3, post: 3, content: "Comment from user Barb on post id 3" },
@@ -53,8 +53,8 @@ const initialState = [
     id: 5,
     name: "Dudu",
     posts: [9, 10],
-    following: [1, 3, 4, 2],
-    followers: [1, 3, 4, 2],
+    following: [],
+    followers: [],
     avatar: "avatar5.jpg",
     comments: [
       { id: 6, post: 6, content: "Comment from user Dudu on post id 6" },
@@ -67,11 +67,21 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    /* addCommentToUser(state, action) {
-      state.users
-    }  */
+    followUser(state, action) {
+      const currentUser = state.find(
+        (user) => user.id === action.payload.currentUser
+      );
+      const followedUser = state.find(
+        (user) => user.id === action.payload.followedUser
+      );
+
+      currentUser.following.push(action.payload.followedUser);
+      followedUser.followers.push(action.payload.currentUser);
+    },
   },
 });
+
+export const { followUser } = usersSlice.actions;
 
 export const selectUserById = (state, userId) => {
   return state.users.find((user) => user.id === userId);

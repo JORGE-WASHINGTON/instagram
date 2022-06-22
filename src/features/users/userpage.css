@@ -54,6 +54,7 @@
   font-weight: 600;
   margin-left: 20px;
   margin-right: 8px;
+  cursor: pointer;
 }
 
 .profile-page-stats li {
