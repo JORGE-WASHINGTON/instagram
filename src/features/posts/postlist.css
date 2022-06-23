@@ -77,9 +77,8 @@
   height: 100%;
 }
 
-.details-data p {
+.details-data {
   color: #8e8e8e;
-  cursor: pointer;
 }
 
 .details-buttons {

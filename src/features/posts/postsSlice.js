@@ -37,7 +37,8 @@ const initialState = [
     image: "image3.jpg",
     likedBy: [3, 4, 5],
     user: 2,
-    description: "A post description",
+    description:
+      "A really long description A really long descriptionA really long descriptionA really long descriptionA really long descriptionv",
     comments: [
       {
         id: 3,
