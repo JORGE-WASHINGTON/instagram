@@ -30,10 +30,7 @@ const UserPage = () => {
         </div>
         <div className="profile-page-userinfo">
           <div className="profile-page-info-header">
-            <h1>
-              Livia Moara Silva do Nascimento ola que talLivia Moara Silva do
-              Nascimento ola que tal
-            </h1>
+            <h1>{user.name}</h1>
             <button
               className={isFollowed ? "unfollow-button" : "follow-button"}
               onClick={() => onFollowClick(isFollowed)}

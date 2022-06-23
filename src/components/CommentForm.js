@@ -35,7 +35,11 @@ const CommentForm = ({ postId }) => {
           placeholder="Add a Comment"
           onChange={onCommentChange}
         />
-        <button type="button" onClick={onSaveCommentClicked}>
+        <button
+          disabled={comment ? false : true}
+          type="button"
+          onClick={onSaveCommentClicked}
+        >
           Publish
         </button>
       </form>

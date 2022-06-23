@@ -22,6 +22,10 @@
   font-weight: 600;
 }
 
+.post-comment button:disabled {
+  opacity: 0.3;
+}
+
 .post-comment textarea {
   display: flex;
   height: 18px;
