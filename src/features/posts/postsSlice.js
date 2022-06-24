@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useGetUserById } from "../apiSlice/apiSlice";
 
-const initialState = [
+/* const initialState = [
   {
     id: 1,
     date: new Date().toISOString(),
@@ -152,7 +153,9 @@ const initialState = [
       },
     ],
   },
-];
+]; */
+
+const initialState = [];
 
 const postSlice = createSlice({
   name: "posts",

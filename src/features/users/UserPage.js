@@ -1,18 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import "./userpage.css";
-import { useSelector } from "react-redux";
-import { followUser, unfollowUser } from "./usersSlice";
-import { useDispatch } from "react-redux";
 
 const UserPage = () => {
-  const { username } = useParams();
-  const user = useSelector((state) =>
-    state.users.find((user) => user.name === username)
-  );
+  const { userId } = useParams();
+
   const currentUser = 1;
 
-  const isFollowed = user.followers.includes(currentUser);
+  /* const isFollowed = user.followers.includes(currentUser);
 
   const dispatch = useDispatch();
 
@@ -21,16 +16,16 @@ const UserPage = () => {
       ? dispatch(unfollowUser({ unfollowedUser: user.id, currentUser }))
       : dispatch(followUser({ followedUser: user.id, currentUser }));
   };
-
+ */
   return (
     <section className="profile-page-container">
-      <div className="profile-page-infocontainer">
+      {/* <div className="profile-page-infocontainer">
         <div className="profile-page-avatar">
-          <img src={user.avatar} alt="" />
+          <img src={user.image} alt="" />
         </div>
         <div className="profile-page-userinfo">
           <div className="profile-page-info-header">
-            <h1>{user.name}</h1>
+            <h1>{user.username}</h1>
             <button
               className={isFollowed ? "unfollow-button" : "follow-button"}
               onClick={() => onFollowClick(isFollowed)}
@@ -41,16 +36,16 @@ const UserPage = () => {
 
           <ul className="profile-page-stats">
             <li>
-              <span>{user.posts.length}</span> posts
+              <span>{posts.posts.length}</span> posts
             </li>
             <li>
-              <span>{user.followers.length}</span> followers
+              <span>10</span> followers
             </li>
             <li>
-              <span>{user.following.length}</span> following
+              <span>20</span> following
             </li>
           </ul>
-          <h2>{username}</h2>
+          <h2>{user.username}</h2>
         </div>
       </div>
       <div className="profile-page-media-container">
@@ -59,7 +54,7 @@ const UserPage = () => {
           <span>SAVED</span>
           <span>TAGGED</span>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };

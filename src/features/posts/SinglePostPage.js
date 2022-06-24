@@ -95,8 +95,6 @@ const SinglePostPage = () => {
                 </div>
               </div>
               {renderedComments}
-
-              {/*  */}
             </ul>
           </div>
           <div className="details-actions">

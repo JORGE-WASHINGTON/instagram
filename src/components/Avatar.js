@@ -6,7 +6,7 @@ const Avatar = ({ user }) => {
   return (
     <span className="avatar">
       <Link to={`/users/${user.id}`}>
-        <img src={`../${user.avatar}`} alt="profile photo" />
+        <img src={`${user.avatar}`} alt="profile photo" />
       </Link>
     </span>
   );

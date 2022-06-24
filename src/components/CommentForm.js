@@ -20,8 +20,8 @@ const CommentForm = ({ postId }) => {
           comment_user: 2,
         })
       );
+      setComment("");
     }
-    setComment("");
   };
 
   const dispatch = useDispatch();
@@ -30,6 +30,7 @@ const CommentForm = ({ postId }) => {
     <div className="post-comment">
       <form>
         <textarea
+          value={comment}
           autoComplete="off"
           autoCorrect="off"
           placeholder="Add a Comment"
