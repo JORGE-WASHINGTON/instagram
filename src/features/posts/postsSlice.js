@@ -1,7 +1,8 @@
+/*
 import { createSlice } from "@reduxjs/toolkit";
 import { useGetUserById } from "../apiSlice/apiSlice";
 
-/* const initialState = [
+ const initialState = [
   {
     id: 1,
     date: new Date().toISOString(),
@@ -153,7 +154,7 @@ import { useGetUserById } from "../apiSlice/apiSlice";
       },
     ],
   },
-]; */
+]; 
 
 const initialState = [];
 
@@ -192,4 +193,4 @@ export const selectPostById = (state, postId) => {
 
 export const { addCommentToPost, addLike, removeLike } = postSlice.actions;
 
-export default postSlice.reducer;
+export default postSlice.reducer; */

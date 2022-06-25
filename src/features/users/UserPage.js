@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { useParams } from "react-router-dom";
 import "./userpage.css";
 
@@ -7,7 +7,7 @@ const UserPage = () => {
 
   const currentUser = 1;
 
-  /* const isFollowed = user.followers.includes(currentUser);
+  const isFollowed = user.followers.includes(currentUser);
 
   const dispatch = useDispatch();
 
@@ -16,10 +16,10 @@ const UserPage = () => {
       ? dispatch(unfollowUser({ unfollowedUser: user.id, currentUser }))
       : dispatch(followUser({ followedUser: user.id, currentUser }));
   };
- */
+ 
   return (
     <section className="profile-page-container">
-      {/* <div className="profile-page-infocontainer">
+       <div className="profile-page-infocontainer">
         <div className="profile-page-avatar">
           <img src={user.image} alt="" />
         </div>
@@ -54,9 +54,10 @@ const UserPage = () => {
           <span>SAVED</span>
           <span>TAGGED</span>
         </div>
-      </div> */}
+      </div> 
     </section>
   );
 };
 
 export default UserPage;
+ */

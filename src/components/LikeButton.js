@@ -1,19 +1,31 @@
-import { useDispatch } from "react-redux";
-import { addLike, removeLike } from "../features/posts/postsSlice";
+import {
+  useGetLikesByPostIdQuery,
+  useAddLikeMutation,
+  useRemoveLikeMutation,
+} from "../features/apiSlice/apiSlice";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const LikeButton = ({ post }) => {
-  const currentUser = 1;
-  const isLiked = post.likedBy.includes(currentUser);
-  const dispatch = useDispatch();
-
-  const onLikeClick = (isLiked) => {
-    isLiked
-      ? dispatch(removeLike({ post: post.id, currentUser }))
-      : dispatch(addLike({ post: post.id, currentUser }));
-  };
+  const {
+    data: postLikes,
+    error,
+    isLoading,
+  } = useGetLikesByPostIdQuery(post.id);
+  const currentUser = 8;
+  const myLike = postLikes?.find((like) => like.user === currentUser);
+  const isLiked = myLike ? true : false;
+  const [addLike, { isLoading: isAddingLike }] = useAddLikeMutation();
+  const [removeLike, { isLoading: isRemovingLike }] = useRemoveLikeMutation();
 
   return (
-    <button onClick={() => onLikeClick(isLiked)}>
+    <button
+      onClick={() => {
+        isLiked
+          ? removeLike(myLike.id)
+          : addLike({ id: uuidv4(), user: currentUser, postId: post.id });
+      }}
+    >
       <span className="like-icon">
         <svg
           className={isLiked ? "liked svg-clicked" : "svg"}

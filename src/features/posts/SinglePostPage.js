@@ -1,3 +1,5 @@
+/*
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import "./singlepostpage.css";
@@ -31,20 +33,20 @@ const SinglePostPage = () => {
   const user = useSelector((state) => selectUserById(state, post.user));
   const users = useSelector((state) => state.users);
 
-  /* const [comment, setComment] = useState("");
+  const [comment, setComment] = useState("");
 
   const onCommentChange = (e) => {
     setComment(e.target.value);
-  }; */
+  };
 
-  /* const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const onLikeClicked = () => {
     console.log("like hit");
     dispatch(addLike({ post: Number(postId), user: 6 }));
-  }; */
+  };
 
-  /* const onSaveCommentClicked = () => {
+  const onSaveCommentClicked = () => {
     console.log("hit");
     if (comment) {
       dispatch(
@@ -57,7 +59,7 @@ const SinglePostPage = () => {
       );
     }
     setComment("");
-  }; */
+  }; 
 
   const renderedComments = post.comments.map((comment, i) => (
     <Comment
@@ -116,10 +118,7 @@ const SinglePostPage = () => {
 
 export default SinglePostPage;
 
-{
-  /* 
-  fakeData
-  <li style={{ display: "flex" }}>
+ <li style={{ display: "flex" }}>
                   <Avatar user={user} />
                   <div>
                     <p>
@@ -166,5 +165,4 @@ export default SinglePostPage;
                       online resources!
                     </p>
                   </div>
-                </li> */
-}
+                </li>  */

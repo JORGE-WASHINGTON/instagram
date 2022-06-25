@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
+/* const initialState = [
   {
     id: 1,
     avatar: "avatar1.jpg",
@@ -61,9 +61,9 @@ const initialState = [
       { id: 7, post: 7, content: "Comment from user Dudu on post id 7" },
     ],
   },
-];
+]; */
 
-const usersSlice = createSlice({
+/* const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
@@ -102,4 +102,4 @@ export const selectUserById = (state, userId) => {
   return state.users.find((user) => user.id === userId);
 };
 
-export default usersSlice.reducer;
+export default usersSlice.reducer; */

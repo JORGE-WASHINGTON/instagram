@@ -13,8 +13,8 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<PostList />} />
-        <Route path="/p/:postId" element={<SinglePostPage />} />
-        <Route path="/:userId" element={<UserPage />} />
+        {/* <Route path="/p/:postId" element={<SinglePostPage />} />
+        <Route path="/:userId" element={<UserPage />} /> */}
       </Routes>
     </Router>
   );

@@ -7,7 +7,6 @@ import {
   AiOutlineMessage,
   AiOutlinePlusCircle,
   AiOutlineCompass,
-  AiFillHeart,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -15,8 +14,6 @@ import { useSelector } from "react-redux";
 import { IconContext } from "react-icons";
 
 const NavBar = () => {
-  const currentUser = useSelector((state) => state.users[0]);
-
   return (
     <nav>
       <div className="nav-container">
@@ -60,7 +57,7 @@ const NavBar = () => {
 
           <button className="navigation-buttons">
             <IconContext.Provider value={{ size: "2em", color: "black" }}>
-              <Link to={`/${currentUser.name}`}>
+              <Link to={`/`}>
                 <AiOutlineUser />
               </Link>
             </IconContext.Provider>

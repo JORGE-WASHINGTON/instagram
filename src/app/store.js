@@ -5,8 +5,8 @@ import { fakeApi } from "../features/apiSlice/apiSlice";
 
 export const store = configureStore({
   reducer: {
-    posts: postsReducer,
-    users: usersReducer,
+    /* posts: postsReducer,
+    users: usersReducer, */
     [fakeApi.reducerPath]: fakeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
