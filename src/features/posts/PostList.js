@@ -1,6 +1,5 @@
 import React from "react";
 import "./postlist.css";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import CommentForm from "../../components/CommentForm";
@@ -9,10 +8,20 @@ import {
   useGetPostsQuery,
   useGetUserByIdQuery,
   useAddLikeMutation,
+  useGetLikesByPostIdQuery,
 } from "../apiSlice/apiSlice";
+import { useState } from "react";
 
 const Post = ({ post, currentUser }) => {
   const { data: user, isLoading, error } = useGetUserByIdQuery(post.user);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
+  const {
+    data: postLikes,
+    error: likesError,
+    isLoading: likesLoading,
+  } = useGetLikesByPostIdQuery(post.id);
+  const [addLike] = useAddLikeMutation();
 
   return (
     <>
@@ -32,17 +41,34 @@ const Post = ({ post, currentUser }) => {
           </div>
           <div className="post-details">
             <div className="details-buttons">
-              <LikeButton post={post} />
+              <LikeButton post={post} postLikes={postLikes} onAdd={addLike} />
             </div>
             <div className="likes-info">
               <p>
-                Liked by and <span>other people</span>
+                Liked by {/* <span>{postLikes[0].user}</span> */} and{" "}
+                <span>other people</span>
               </p>
             </div>
             {post.description.length > 120 ? (
               <p>
-                <span>{user.name}</span> {post.description.slice(0, 119)}
-                ...<span>mais</span>
+                <span>{user.name}</span> {post.description.slice(0, 119)}{" "}
+                <span
+                  onClick={() => setIsDescriptionExpanded(true)}
+                  style={{
+                    cursor: "pointer",
+                    display: isDescriptionExpanded ? "none" : "inline",
+                  }}
+                >
+                  ... more
+                </span>
+                <span
+                  style={{
+                    display: isDescriptionExpanded ? "inline" : "none",
+                    fontWeight: 400,
+                  }}
+                >
+                  {post.description.slice(119, -1)}
+                </span>
               </p>
             ) : (
               <p>

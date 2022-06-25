@@ -6,16 +6,11 @@ import {
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const LikeButton = ({ post }) => {
-  const {
-    data: postLikes,
-    error,
-    isLoading,
-  } = useGetLikesByPostIdQuery(post.id);
+const LikeButton = ({ post, onAdd, postLikes }) => {
   const currentUser = 8;
   const myLike = postLikes?.find((like) => like.user === currentUser);
   const isLiked = myLike ? true : false;
-  const [addLike, { isLoading: isAddingLike }] = useAddLikeMutation();
+  /*   const [addLike, { isLoading: isAddingLike }] = useAddLikeMutation(); */
   const [removeLike, { isLoading: isRemovingLike }] = useRemoveLikeMutation();
 
   return (
@@ -23,7 +18,7 @@ const LikeButton = ({ post }) => {
       onClick={() => {
         isLiked
           ? removeLike(myLike.id)
-          : addLike({ id: uuidv4(), user: currentUser, postId: post.id });
+          : onAdd({ id: uuidv4(), user: currentUser, postId: post.id });
       }}
     >
       <span className="like-icon">

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import types from "@testing-library/user-event";
 import { v4 as uuidv4 } from "uuid";
 
 // Define a service using a base URL and expected endpoints
@@ -18,7 +19,13 @@ export const fakeApi = createApi({
     }),
     getLikesByPostId: builder.query({
       query: (postId) => `/likes?postId=${postId}`,
-      providesTags: ["Likes"],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Likes", id })),
+              { type: "Likes", id: "LIST" },
+            ]
+          : [{ type: "Likes", id: "LIST" }],
     }),
     addLike: builder.mutation({
       query: (like) => ({
@@ -27,7 +34,7 @@ export const fakeApi = createApi({
         method: "POST",
         body: like,
       }),
-      invalidatesTags: ["Likes"],
+      invalidatesTags: [{ type: "Likes", id: "LIST" }],
       transformResponse: (response, meta, arg) => response.data,
     }),
     removeLike: builder.mutation({
@@ -35,7 +42,7 @@ export const fakeApi = createApi({
         url: `/likes/${likeId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Likes"],
+      invalidatesTags: (result, error, likeId) => [{ type: "Likes", likeId }],
     }),
   }),
 });
