@@ -28,14 +28,16 @@ export const fakeApi = createApi({
           : [{ type: "Likes", id: "LIST" }],
     }),
     addLike: builder.mutation({
-      query: (like) => ({
-        url: "/likes",
-        headers: { "Content-type": "application/json" },
-        method: "POST",
-        body: like,
-      }),
+      query: (body) => {
+        console.log("Adding Like", body);
+        return {
+          url: "/likes",
+          headers: { "Content-type": "application/json" },
+          method: "POST",
+          body,
+        };
+      },
       invalidatesTags: [{ type: "Likes", id: "LIST" }],
-      transformResponse: (response, meta, arg) => response.data,
     }),
     removeLike: builder.mutation({
       query: (likeId) => ({
