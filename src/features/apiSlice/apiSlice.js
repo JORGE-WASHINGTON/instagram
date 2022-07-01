@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import types from "@testing-library/user-event";
 import { v4 as uuidv4 } from "uuid";
 
 // Define a service using a base URL and expected endpoints
@@ -19,17 +18,15 @@ export const fakeApi = createApi({
     }),
     getLikesByPostId: builder.query({
       query: (postId) => `/likes?postId=${postId}`,
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Likes", id })),
-              { type: "Likes", id: "LIST" },
-            ]
-          : [{ type: "Likes", id: "LIST" }],
+      providesTags: (result, error, arg) =>
+        result ? [{ type: "Likes", id: arg }] : ["Likes"],
+    }),
+    getLike: builder.query({
+      query: (likeId) => `/likes/${likeId}`,
+      providesTags: (result, error, likeId) => [{ type: "Likes", likeId }],
     }),
     addLike: builder.mutation({
       query: (body) => {
-        console.log("Adding Like", body);
         return {
           url: "/likes",
           headers: { "Content-type": "application/json" },
@@ -37,14 +34,18 @@ export const fakeApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: "Likes", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Likes", id: arg.postId },
+      ],
     }),
     removeLike: builder.mutation({
-      query: (likeId) => ({
-        url: `/likes/${likeId}`,
+      query: (body) => ({
+        url: `/likes/${body.likeId}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, likeId) => [{ type: "Likes", likeId }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Likes", id: arg.postId },
+      ],
     }),
   }),
 });
@@ -57,4 +58,5 @@ export const {
   useAddLikeMutation,
   useGetLikesByPostIdQuery,
   useRemoveLikeMutation,
+  useGetLikeQuery,
 } = fakeApi;

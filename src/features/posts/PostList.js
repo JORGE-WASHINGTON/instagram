@@ -9,18 +9,25 @@ import {
   useGetUserByIdQuery,
   useAddLikeMutation,
   useGetLikesByPostIdQuery,
+  fakeApi,
 } from "../apiSlice/apiSlice";
 import { useState } from "react";
 
-const Post = ({ post, currentUser }) => {
-  const { data: user, isLoading, error } = useGetUserByIdQuery(post.user);
+const Post = ({ id }) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const { post } = fakeApi.useGetPostsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      post: data?.find((post) => post.id === id),
+    }),
+  });
+  const { data: user, isLoading, error } = useGetUserByIdQuery(post.user);
 
   const {
     data: postLikes,
     error: likesError,
     isLoading: likesLoading,
-  } = useGetLikesByPostIdQuery(post.id);
+  } = useGetLikesByPostIdQuery(id);
+
   const [addLike] = useAddLikeMutation();
 
   return (
@@ -41,13 +48,19 @@ const Post = ({ post, currentUser }) => {
           </div>
           <div className="post-details">
             <div className="details-buttons">
-              <LikeButton post={post} postLikes={postLikes} onAdd={addLike} />
+              <LikeButton
+                postId={post.id}
+                postLikes={postLikes}
+                onAdd={addLike}
+              />
             </div>
             <div className="likes-info">
-              <p>
-                Liked by {/* <span>{postLikes[0].user}</span> */} and{" "}
-                <span>other people</span>
-              </p>
+              {postLikes?.length > 0 && (
+                <p>
+                  Liked by <span>{postLikes[0].user}</span> and{" "}
+                  <span>other people</span>
+                </p>
+              )}
             </div>
             {post.description.length > 120 ? (
               <p>
@@ -91,7 +104,6 @@ const Post = ({ post, currentUser }) => {
 
 const PostList = () => {
   const [isOverflow, setIsOverflow] = useState(false);
-  const currentUser = 1;
 
   const {
     data: posts,
@@ -111,7 +123,7 @@ const PostList = () => {
     );
   } else if (isSuccess) {
     const renderedPosts = posts.map((post) => (
-      <Post currentUser={currentUser} post={post} key={post.id} />
+      <Post id={post.id} key={post.id} />
     ));
 
     content = renderedPosts;
