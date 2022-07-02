@@ -1,16 +1,18 @@
-/*
-
 import React from "react";
 import { useParams } from "react-router-dom";
 import "./singlepostpage.css";
-import { selectPostById } from "./postsSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUserById } from "../users/usersSlice";
 import Avatar from "../../components/Avatar";
-import { addCommentToPost, addLike } from "./postsSlice";
+
 import { useState } from "react";
 import CommentForm from "../../components/CommentForm";
 import LikeButton from "../../components/LikeButton";
+
+import {
+  useGetPostQuery,
+  useGetUserByIdQuery,
+  useGetUsersQuery,
+  fakeApi,
+} from "../apiSlice/apiSlice";
 
 const Comment = ({ userId, users, comment }) => {
   const user = users.find((user) => user.id === userId);
@@ -27,26 +29,21 @@ const Comment = ({ userId, users, comment }) => {
 };
 
 const SinglePostPage = () => {
+  const [skip, setSkip] = useState(true);
   const { postId } = useParams();
-  const post = useSelector((state) => selectPostById(state, Number(postId)));
-  console.log(typeof post.id);
-  const user = useSelector((state) => selectUserById(state, post.user));
-  const users = useSelector((state) => state.users);
-
+  const { data: post, error, isLoading, isSuccess } = useGetPostQuery(postId);
+  const { postLikes } = fakeApi.useGetLikesByPostIdQuery(postId, {
+    selectFromResult: ({ data }) => ({
+      postLikes: data,
+    }),
+  });
   const [comment, setComment] = useState("");
 
   const onCommentChange = (e) => {
     setComment(e.target.value);
   };
 
-  const dispatch = useDispatch();
-
-  const onLikeClicked = () => {
-    console.log("like hit");
-    dispatch(addLike({ post: Number(postId), user: 6 }));
-  };
-
-  const onSaveCommentClicked = () => {
+  /* const onSaveCommentClicked = () => {
     console.log("hit");
     if (comment) {
       dispatch(
@@ -59,49 +56,54 @@ const SinglePostPage = () => {
       );
     }
     setComment("");
-  }; 
+  }; */
 
-  const renderedComments = post.comments.map((comment, i) => (
+  /* const renderedComments = post.comments.map((comment, i) => (
     <Comment
       comment={comment}
       users={users}
       userId={comment.comment_user}
       key={i}
     />
-  ));
+  )); */
 
-  return (
-    <section className="singlepostpage-section">
+  let content;
+  if (isLoading) {
+    content = <div>Is loading</div>;
+  }
+
+  if (isSuccess) {
+    content = (
       <article>
         <div className="image-container">
-          <img src={`../${post.image}`} alt="" />
+          <img src={`${post.image}`} alt="" />
         </div>
         <div className="singlepostpage-details">
           <div className="details-header">
-            <Avatar user={user} />
-            <span>{user.name} • Following </span>
+            <Avatar user={post.user} />
+            <span>{post.user.name} • Following </span>
           </div>
 
           <div className="details-content">
             <ul className="comment-list">
               <div className="details-content-post-content">
-                <Avatar user={user} />
+                <Avatar user={post.user} />
                 <div>
                   <p>
-                    <span>{user.name}</span> Choose 1 French Adjective and use
-                    it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want to
-                    learn more French? 👉Click the link in our bio at
+                    <span>{post.user.name}</span> Choose 1 French Adjective and
+                    use it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
+                    to learn more French? 👉Click the link in our bio at
                     @FrenchPod101_ to sign up for free and access the best
                     online resources!
                   </p>
                 </div>
               </div>
-              {renderedComments}
+              {/* {renderedComments} */}
             </ul>
           </div>
           <div className="details-actions">
             <div className="details-buttons">
-              <LikeButton post={post} />
+              <LikeButton postId={post.id} postLikes={postLikes} />
             </div>
             <div className="likes-information">
               <p>
@@ -112,13 +114,16 @@ const SinglePostPage = () => {
           </div>
         </div>
       </article>
-    </section>
-  );
+    );
+  }
+
+  return <section className="singlepostpage-section">{content}</section>;
 };
 
 export default SinglePostPage;
 
- <li style={{ display: "flex" }}>
+{
+  /* <li style={{ display: "flex" }}>
                   <Avatar user={user} />
                   <div>
                     <p>
@@ -165,4 +170,5 @@ export default SinglePostPage;
                       online resources!
                     </p>
                   </div>
-                </li>  */
+                </li>   */
+}

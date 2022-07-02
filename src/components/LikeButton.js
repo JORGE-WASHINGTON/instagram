@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 const LikeButton = ({ postId, onAdd, postLikes }) => {
   const currentUser = 8;
 
+  const [addLike] = useAddLikeMutation();
   const [removeLike, isLoading] = useRemoveLikeMutation();
 
   /* const { like } = fakeApi.useGetLikesByPostIdQuery(postId, {
@@ -30,23 +31,20 @@ const LikeButton = ({ postId, onAdd, postLikes }) => {
     }
   }, [like]);
 
-  /* if (like) {
-    setIsLiked(true);
-  } */
-
   return (
     <button
+      className="like-icon"
       onClick={() => {
         if (isLiked) {
           removeLike({ likeId: like.id, postId: postId });
           setIsLiked(false);
         } else {
-          onAdd({ id: uuidv4(), user: currentUser, postId: postId });
+          addLike({ id: uuidv4(), user: currentUser, postId: postId });
           setIsLiked(true);
         }
       }}
     >
-      <span className="like-icon">
+      <span>
         <svg
           className={isLiked ? "liked svg-clicked" : "svg"}
           height="24"

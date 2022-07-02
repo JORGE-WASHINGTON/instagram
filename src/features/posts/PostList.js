@@ -21,7 +21,7 @@ const Post = ({ id }) => {
       post: data?.find((post) => post.id === id),
     }),
   });
-  const { data: user, isLoading, error } = useGetUserByIdQuery(post.user);
+  const { data: user, isLoading, error } = useGetUserByIdQuery(id);
 
   const {
     data: postLikes,
@@ -54,6 +54,26 @@ const Post = ({ id }) => {
                 postLikes={postLikes}
                 onAdd={addLike}
               />
+              <button className="like-icon">
+                <Link to={`/p/${id}`}>
+                  <svg
+                    className="svg"
+                    color="#262626"
+                    fill="#262626"
+                    height="24"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="24"
+                  >
+                    <path
+                      d="M20.656 17.008a9.993 9.993 0 10-3.59 3.615L22 22z"
+                      fill="none"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                    ></path>
+                  </svg>
+                </Link>
+              </button>
             </div>
             <div className="likes-info">
               {postLikes?.length > 0 && (

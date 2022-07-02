@@ -7,11 +7,17 @@ export const fakeApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3004/" }),
   tagTypes: ["Likes"],
   endpoints: (builder) => ({
+    getUsers: builder.query({
+      query: () => "/users",
+    }),
     getUserById: builder.query({
       query: (id) => `/users/${id}`,
     }),
     getPosts: builder.query({
       query: () => `/posts`,
+    }),
+    getPost: builder.query({
+      query: (id) => `/posts/${id}`,
     }),
     getComments: builder.query({
       query: () => "/comments",
@@ -59,4 +65,6 @@ export const {
   useGetLikesByPostIdQuery,
   useRemoveLikeMutation,
   useGetLikeQuery,
+  useGetPostQuery,
+  useGetUsersQuery,
 } = fakeApi;
