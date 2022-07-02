@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 
 const Post = ({ id }) => {
+  const [isLiked, setIsLiked] = useState(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const { post } = fakeApi.useGetPostsQuery(undefined, {
     selectFromResult: ({ data }) => ({

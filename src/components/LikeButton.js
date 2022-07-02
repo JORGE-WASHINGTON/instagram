@@ -5,31 +5,50 @@ import {
   useGetLikeQuery,
   fakeApi,
 } from "../features/apiSlice/apiSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const LikeButton = ({ postId, onAdd, postLikes }) => {
   const currentUser = 8;
 
-  const [removeLike, { isLoading: isRemovingLike }] = useRemoveLikeMutation();
+  const [removeLike, isLoading] = useRemoveLikeMutation();
 
-  const { like } = fakeApi.useGetLikesByPostIdQuery(postId, {
+  /* const { like } = fakeApi.useGetLikesByPostIdQuery(postId, {
     selectFromResult: ({ data }) => ({
       like: data?.find((like) => like.user === currentUser),
     }),
-  });
+  }); */
+  const like = postLikes?.find((like) => like.user === currentUser);
+
+  console.log(like ? true : false, postId);
+
+  const [isLiked, setIsLiked] = useState(null);
+
+  useEffect(() => {
+    if (like) {
+      setIsLiked(true);
+    }
+  }, [like]);
+
+  /* if (like) {
+    setIsLiked(true);
+  } */
 
   return (
     <button
       onClick={() => {
-        like
-          ? removeLike({ likeId: like.id, postId: postId })
-          : onAdd({ id: uuidv4(), user: currentUser, postId: postId });
+        if (isLiked) {
+          removeLike({ likeId: like.id, postId: postId });
+          setIsLiked(false);
+        } else {
+          onAdd({ id: uuidv4(), user: currentUser, postId: postId });
+          setIsLiked(true);
+        }
       }}
     >
       <span className="like-icon">
         <svg
-          className={like ? "liked svg-clicked" : "svg"}
+          className={isLiked ? "liked svg-clicked" : "svg"}
           height="24"
           viewBox="0 0 48 52"
           width="24"
