@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import "./commentform.css";
-import { addCommentToPost } from "../features/posts/postsSlice";
 
 const CommentForm = ({ postId }) => {
   const [comment, setComment] = useState("");
@@ -9,7 +8,7 @@ const CommentForm = ({ postId }) => {
     setComment(e.target.value);
   };
 
-  const onSaveCommentClicked = (e) => {
+  /* const onSaveCommentClicked = (e) => {
     console.log("hit");
     if (comment) {
       dispatch(
@@ -24,7 +23,7 @@ const CommentForm = ({ postId }) => {
     }
   };
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); */
 
   return (
     <div className="post-comment">
@@ -34,12 +33,12 @@ const CommentForm = ({ postId }) => {
           autoComplete="off"
           autoCorrect="off"
           placeholder="Add a Comment"
-          onChange={onCommentChange}
+          /* onChange={onCommentChange} */
         />
         <button
           disabled={comment ? false : true}
           type="button"
-          onClick={onSaveCommentClicked}
+          /* onClick={onSaveCommentClicked} */
         >
           Publish
         </button>

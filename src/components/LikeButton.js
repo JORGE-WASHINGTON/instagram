@@ -1,24 +1,16 @@
 import {
-  useGetLikesByPostIdQuery,
   useAddLikeMutation,
   useRemoveLikeMutation,
-  useGetLikeQuery,
-  fakeApi,
 } from "../features/apiSlice/apiSlice";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const LikeButton = ({ postId, onAdd, postLikes }) => {
+const LikeButton = ({ postId, postLikes }) => {
   const currentUser = 8;
 
   const [addLike] = useAddLikeMutation();
   const [removeLike, isLoading] = useRemoveLikeMutation();
 
-  /* const { like } = fakeApi.useGetLikesByPostIdQuery(postId, {
-    selectFromResult: ({ data }) => ({
-      like: data?.find((like) => like.user === currentUser),
-    }),
-  }); */
   const like = postLikes?.find((like) => like.user === currentUser);
 
   console.log(like ? true : false, postId);

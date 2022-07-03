@@ -14,6 +14,8 @@ import {
   fakeApi,
 } from "../apiSlice/apiSlice";
 
+const emptyArray = [];
+
 const Comment = ({ userId, users, comment }) => {
   const user = users.find((user) => user.id === userId);
   return (
@@ -31,7 +33,12 @@ const Comment = ({ userId, users, comment }) => {
 const SinglePostPage = () => {
   const [skip, setSkip] = useState(true);
   const { postId } = useParams();
-  const { data: post, error, isLoading, isSuccess } = useGetPostQuery(postId);
+  const { post } = fakeApi.useGetPostsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      post: data?.find((post) => post.id === Number(postId)),
+    }),
+  });
+
   const { postLikes } = fakeApi.useGetLikesByPostIdQuery(postId, {
     selectFromResult: ({ data }) => ({
       postLikes: data,
@@ -68,11 +75,11 @@ const SinglePostPage = () => {
   )); */
 
   let content;
-  if (isLoading) {
+  if (!post) {
     content = <div>Is loading</div>;
   }
 
-  if (isSuccess) {
+  if (post) {
     content = (
       <article>
         <div className="image-container">
