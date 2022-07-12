@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useAddCommentMutation } from "../features/apiSlice/apiSlice";
 import { useState } from "react";
 import "./commentform.css";
 
@@ -8,22 +8,15 @@ const CommentForm = ({ postId }) => {
     setComment(e.target.value);
   };
 
-  /* const onSaveCommentClicked = (e) => {
+  const [addComment] = useAddCommentMutation();
+
+  const onSaveCommentClicked = (e) => {
     console.log("hit");
     if (comment) {
-      dispatch(
-        addCommentToPost({
-          id: 11,
-          post: postId,
-          content: comment,
-          comment_user: 2,
-        })
-      );
+      addComment({ postId: postId, user_id: 5, content: comment });
       setComment("");
     }
   };
-
-  const dispatch = useDispatch(); */
 
   return (
     <div className="post-comment">
@@ -33,12 +26,12 @@ const CommentForm = ({ postId }) => {
           autoComplete="off"
           autoCorrect="off"
           placeholder="Add a Comment"
-          /* onChange={onCommentChange} */
+          onChange={onCommentChange}
         />
         <button
           disabled={comment ? false : true}
           type="button"
-          /* onClick={onSaveCommentClicked} */
+          onClick={onSaveCommentClicked}
         >
           Publish
         </button>

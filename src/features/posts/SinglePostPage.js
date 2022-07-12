@@ -13,6 +13,7 @@ import {
   useGetUsersQuery,
   fakeApi,
 } from "../apiSlice/apiSlice";
+import PostMedia from "../../components/PostMedia";
 
 const emptyArray = [];
 
@@ -22,9 +23,7 @@ const Comment = ({ userId, users, comment }) => {
     <li>
       <Avatar user={user} />
       <div>
-        <p>
-          <span> {user.name} </span> {comment.content}
-        </p>
+        <p>{/*  <span> {post.username} </span> {comment.content} */}</p>
       </div>
     </li>
   );
@@ -39,11 +38,11 @@ const SinglePostPage = () => {
     }),
   });
 
-  const { postLikes } = fakeApi.useGetLikesByPostIdQuery(postId, {
+  /* const { postLikes } = fakeApi.useGetLikesByPostIdQuery(postId, {
     selectFromResult: ({ data }) => ({
       postLikes: data,
     }),
-  });
+  }); */
   const [comment, setComment] = useState("");
 
   const onCommentChange = (e) => {
@@ -82,22 +81,30 @@ const SinglePostPage = () => {
   if (post) {
     content = (
       <article>
-        <div className="image-container">
-          <img src={`${post.image}`} alt="" />
+        <div
+          style={{
+            width: "100%",
+            minHeight: "450px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <PostMedia media={post.media} />
         </div>
         <div className="singlepostpage-details">
           <div className="details-header">
-            <Avatar user={post.user} />
-            <span>{post.user.name} • Following </span>
+            <Avatar userId={post.user_id} avatar={post.avatar} />
+            <span>{post.username} • Following </span>
           </div>
 
           <div className="details-content">
             <ul className="comment-list">
               <div className="details-content-post-content">
-                <Avatar user={post.user} />
+                <Avatar userId={post.user_id} avatar={post.avatar} />
                 <div>
                   <p>
-                    <span>{post.user.name}</span> Choose 1 French Adjective and
+                    <span>{post.username}</span> Choose 1 French Adjective and
                     use it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
                     to learn more French? 👉Click the link in our bio at
                     @FrenchPod101_ to sign up for free and access the best
@@ -105,12 +112,61 @@ const SinglePostPage = () => {
                   </p>
                 </div>
               </div>
+              <li style={{ display: "flex" }}>
+                <Avatar userId={post.user_id} avatar={post.avatar} />
+                <div>
+                  <p>
+                    <span>{post.username}</span> Choose 1 French Adjective and
+                    use it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
+                    to learn more French? 👉Click the link in our bio at
+                    @FrenchPod101_ to sign up for free and access the best
+                    online resources!
+                  </p>
+                </div>
+              </li>
+              <li style={{ display: "flex" }}>
+                <Avatar userId={post.user_id} avatar={post.avatar} />
+                <div>
+                  <p>
+                    <span>{post.username}</span> Choose 1 French Adjective and
+                    use it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
+                    to learn more French? 👉Click the link in our bio at
+                    @FrenchPod101_ to sign up for free and access the best
+                    online resources!
+                  </p>
+                </div>
+              </li>
+              <li style={{ display: "flex" }}>
+                <Avatar userId={post.user_id} avatar={post.avatar} />
+                <div>
+                  <p>
+                    <span>{post.username}</span> Choose 1 French Adjective and
+                    use it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
+                    to learn more French? 👉Click the link in our bio at
+                    @FrenchPod101_ to sign up for free and access the best
+                    online resources!
+                  </p>
+                </div>
+              </li>
+              <li style={{ display: "flex" }}>
+                <Avatar userId={post.user_id} avatar={post.avatar} />
+                <div>
+                  <p>
+                    <span>{post.username}</span> Choose 1 French Adjective and
+                    use it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
+                    to learn more French? 👉Click the link in our bio at
+                    @FrenchPod101_ to sign up for free and access the best
+                    online resources!
+                  </p>
+                </div>
+              </li>
+
               {/* {renderedComments} */}
             </ul>
           </div>
           <div className="details-actions">
             <div className="details-buttons">
-              <LikeButton postId={post.id} postLikes={postLikes} />
+              {/* <LikeButton postId={post.id} postLikes={postLikes} /> */}
             </div>
             <div className="likes-information">
               <p>
@@ -124,7 +180,11 @@ const SinglePostPage = () => {
     );
   }
 
-  return <section className="singlepostpage-section">{content}</section>;
+  return (
+    <div className="wrapper">
+      <section className="singlepostpage-section">{content}</section>
+    </div>
+  );
 };
 
 export default SinglePostPage;
@@ -134,7 +194,7 @@ export default SinglePostPage;
                   <Avatar user={user} />
                   <div>
                     <p>
-                      <span>{user.name}</span> Choose 1 French Adjective and use
+                      <span>{post.username}</span> Choose 1 French Adjective and use
                       it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
                       to learn more French? 👉Click the link in our bio at
                       @FrenchPod101_ to sign up for free and access the best
@@ -146,7 +206,7 @@ export default SinglePostPage;
                   <Avatar user={user} />
                   <div>
                     <p>
-                      <span>{user.name}</span> Choose 1 French Adjective and use
+                      <span>{post.username}</span> Choose 1 French Adjective and use
                       it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
                       to learn more French? 👉Click the link in our bio at
                       @FrenchPod101_ to sign up for free and access the best
@@ -158,7 +218,7 @@ export default SinglePostPage;
                   <Avatar user={user} />
                   <div>
                     <p>
-                      <span>{user.name}</span> Choose 1 French Adjective and use
+                      <span>{post.username}</span> Choose 1 French Adjective and use
                       it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
                       to learn more French? 👉Click the link in our bio at
                       @FrenchPod101_ to sign up for free and access the best
@@ -170,7 +230,7 @@ export default SinglePostPage;
                   <Avatar user={user} />
                   <div>
                     <p>
-                      <span>{user.name}</span> Choose 1 French Adjective and use
+                      <span>{post.username}</span> Choose 1 French Adjective and use
                       it in a sentence. 💡Comment your sentence below! 👩‍🏫 Want
                       to learn more French? 👉Click the link in our bio at
                       @FrenchPod101_ to sign up for free and access the best

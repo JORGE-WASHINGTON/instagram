@@ -1,15 +1,17 @@
 import Avatar from "../../components/Avatar";
+import { differenceInHours, differenceInDays } from "date-fns";
 import { useState } from "react";
 import CommentForm from "../../components/CommentForm";
 import LikeButton from "../../components/LikeButton";
 import {
-  useGetUserByIdQuery,
+  /* useGetUserByIdQuery,
   useAddLikeMutation,
-  useGetLikesByPostIdQuery,
+  useGetLikesByPostIdQuery, */
   fakeApi,
 } from "../apiSlice/apiSlice";
 import { Link } from "react-router-dom";
 import "./postlist.css";
+import PostMedia from "../../components/PostMedia";
 
 export const Post = ({ id }) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
@@ -18,41 +20,34 @@ export const Post = ({ id }) => {
       post: data?.find((post) => post.id === id),
     }),
   });
-  const { data: user, isLoading, error } = useGetUserByIdQuery(id);
 
-  const {
-    data: postLikes,
-    error: likesError,
-    isLoading: likesLoading,
-  } = useGetLikesByPostIdQuery(id);
-
-  const [addLike] = useAddLikeMutation();
+  const hoursAgo = Math.abs(
+    differenceInHours(new Date(post.createdAt), new Date())
+  );
+  let daysAgo;
+  if (hoursAgo >= 24) {
+    daysAgo = Math.abs(differenceInDays(new Date(post.createdAt), new Date()));
+  }
 
   return (
     <>
-      {user && (
+      {post && (
         <article className="post">
           <div className="post-header">
-            <Avatar user={user} />
+            <Avatar userId={post.user_id} avatar={post.post_author_avatar} />
             <div>
-              <h2>{user.name}</h2>
-              <span>{`${post.location.city}, ${post.location.state}, ${post.location.country}`}</span>
+              <h2>{post.post_author}</h2>
+              <span>{post.location}</span>
             </div>
           </div>
-          <div className="post-image">
-            <div className="image-wrapper">
-              {/* <Link to={`/p/${post.id}`}> */}
-              <img src={post.image} alt="Author Avatar" />
-              {/* </Link> */}
-            </div>
-          </div>
+          <PostMedia media={post.media} postId={post.id} />
           <div className="post-details">
             <div className="details-buttons">
-              <LikeButton
+              {/* <LikeButton
                 postId={post.id}
                 postLikes={postLikes}
                 onAdd={addLike}
-              />
+              /> */}
               <button className="like-icon">
                 <Link to={`/p/${id}`}>
                   <svg
@@ -75,16 +70,18 @@ export const Post = ({ id }) => {
               </button>
             </div>
             <div className="likes-info">
-              {postLikes?.length > 0 && (
+              {/* {postLikes?.length > 0 && (
                 <p>
                   Liked by <span>{postLikes[0].user}</span> and{" "}
                   <span>other people</span>
                 </p>
-              )}
+              )} */}
             </div>
-            {post.description.length > 120 ? (
+
+            {post._description.length > 120 ? (
               <p>
-                <span>{user.name}</span> {post.description.slice(0, 119)}{" "}
+                <span>{post.post_author}</span>{" "}
+                {post._description.slice(0, 119)}{" "}
                 <span
                   onClick={() => setIsDescriptionExpanded(true)}
                   style={{
@@ -100,19 +97,25 @@ export const Post = ({ id }) => {
                     fontWeight: 400,
                   }}
                 >
-                  {post.description.slice(119, -1)}
+                  {post._description.slice(119, -1)}
                 </span>
               </p>
             ) : (
               <p>
-                <span>{user.name}</span> {post.description}
+                <span>{post.post_author}</span> {post._description}
               </p>
             )}
             <div className="details-data">
               <Link to={`/p/${post.id}`}>
-                <span>See all comments</span>
+                <span>See all {post.comments.length} comments</span>
               </Link>
-              <p>{post.date}</p>
+              <div style={{ marginTop: "8px" }}>
+                {daysAgo ? (
+                  <p>{`${daysAgo} days ago`}</p>
+                ) : (
+                  <p>{`${hoursAgo} hours ago`}</p>
+                )}
+              </div>
             </div>
           </div>
           <CommentForm postId={post.id} />

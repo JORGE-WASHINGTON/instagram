@@ -4,19 +4,40 @@ import { v4 as uuidv4 } from "uuid";
 // Define a service using a base URL and expected endpoints
 export const fakeApi = createApi({
   reducerPath: "fakeApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3004/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/" }),
   tagTypes: ["Likes"],
   endpoints: (builder) => ({
-    getUsers: builder.query({
+    getPosts: builder.query({
+      query: () => `/posts`,
+      providesTags: (result) =>
+        // is result available?
+        result
+          ? // successful query
+            [
+              ...result.map(({ id }) => ({ type: "Posts", id })),
+              { type: "Posts", id: "LIST" },
+            ]
+          : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
+            [{ type: "Posts", id: "LIST" }],
+    }),
+    addComment: builder.mutation({
+      query: (body) => {
+        return {
+          url: `/comments/${body.postId}/add`,
+          headers: { "Content-type": "application/json" },
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+    }),
+    /* getUsers: builder.query({
       query: () => "/users",
     }),
     getUserById: builder.query({
       query: (id) => `/users/${id}`,
-    }),
-    getPosts: builder.query({
-      query: () => `/posts`,
-    }),
-    getPost: builder.query({
+    }), */
+    /* etPost: builder.query({
       query: (id) => `/posts/${id}`,
     }),
     getComments: builder.query({
@@ -52,19 +73,10 @@ export const fakeApi = createApi({
       invalidatesTags: (result, error, arg) => [
         { type: "Likes", id: arg.postId },
       ],
-    }),
+    }), */
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const {
-  useGetUserByIdQuery,
-  useGetPostsQuery,
-  useAddLikeMutation,
-  useGetLikesByPostIdQuery,
-  useRemoveLikeMutation,
-  useGetLikeQuery,
-  useGetPostQuery,
-  useGetUsersQuery,
-} = fakeApi;
+export const { useGetPostsQuery, useAddCommentMutation } = fakeApi;

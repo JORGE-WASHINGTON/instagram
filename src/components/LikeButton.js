@@ -1,4 +1,4 @@
-import {
+/* import {
   useAddLikeMutation,
   useRemoveLikeMutation,
 } from "../features/apiSlice/apiSlice";
@@ -51,3 +51,4 @@ const LikeButton = ({ postId, postLikes }) => {
 };
 
 export default LikeButton;
+ */
