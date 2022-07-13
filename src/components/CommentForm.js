@@ -1,6 +1,8 @@
 import { useAddCommentMutation } from "../features/apiSlice/apiSlice";
 import { useState } from "react";
+
 import "./commentform.css";
+import CommentSpinner from "./CommentSpinner";
 
 const CommentForm = ({ postId }) => {
   const [comment, setComment] = useState("");
@@ -8,7 +10,7 @@ const CommentForm = ({ postId }) => {
     setComment(e.target.value);
   };
 
-  const [addComment] = useAddCommentMutation();
+  const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
 
   const onSaveCommentClicked = (e) => {
     console.log("hit");
@@ -20,14 +22,17 @@ const CommentForm = ({ postId }) => {
 
   return (
     <div className="post-comment">
-      <form>
+      <form style={{ position: "relative" }}>
+        {isAddingComment && <CommentSpinner />}
         <textarea
           value={comment}
           autoComplete="off"
           autoCorrect="off"
           placeholder="Add a Comment"
+          disabled={isAddingComment ? true : false}
           onChange={onCommentChange}
         />
+
         <button
           disabled={comment ? false : true}
           type="button"

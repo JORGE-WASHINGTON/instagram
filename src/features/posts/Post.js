@@ -1,20 +1,16 @@
 import Avatar from "../../components/Avatar";
 import { differenceInHours, differenceInDays } from "date-fns";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommentForm from "../../components/CommentForm";
 import LikeButton from "../../components/LikeButton";
-import {
-  /* useGetUserByIdQuery,
-  useAddLikeMutation,
-  useGetLikesByPostIdQuery, */
-  fakeApi,
-} from "../apiSlice/apiSlice";
+import { fakeApi } from "../apiSlice/apiSlice";
 import { Link } from "react-router-dom";
 import "./postlist.css";
 import PostMedia from "../../components/PostMedia";
 
 export const Post = ({ id }) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+
   const { post } = fakeApi.useGetPostsQuery(undefined, {
     selectFromResult: ({ data }) => ({
       post: data?.find((post) => post.id === id),
@@ -77,43 +73,51 @@ export const Post = ({ id }) => {
                 </p>
               )} */}
             </div>
-
-            {post._description.length > 120 ? (
-              <p>
-                <span>{post.post_author}</span>{" "}
-                {post._description.slice(0, 119)}{" "}
-                <span
-                  onClick={() => setIsDescriptionExpanded(true)}
-                  style={{
-                    cursor: "pointer",
-                    display: isDescriptionExpanded ? "none" : "inline",
-                  }}
-                >
-                  ... more
-                </span>
-                <span
-                  style={{
-                    display: isDescriptionExpanded ? "inline" : "none",
-                    fontWeight: 400,
-                  }}
-                >
-                  {post._description.slice(119, -1)}
-                </span>
-              </p>
-            ) : (
-              <p>
-                <span>{post.post_author}</span> {post._description}
-              </p>
-            )}
             <div className="details-data">
-              <Link to={`/p/${post.id}`}>
-                <span>See all {post.comments.length} comments</span>
+              {post._description.length > 120 ? (
+                <p>
+                  <span>{post.post_author}</span>{" "}
+                  {post._description.slice(0, 119)}{" "}
+                  <span
+                    onClick={() => setIsDescriptionExpanded(true)}
+                    style={{
+                      cursor: "pointer",
+                      display: isDescriptionExpanded ? "none" : "inline",
+                    }}
+                  >
+                    ... more
+                  </span>
+                  <span
+                    style={{
+                      display: isDescriptionExpanded ? "inline" : "none",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {post._description.slice(119, -1)}
+                  </span>
+                </p>
+              ) : (
+                <p>
+                  <span>{post.post_author}</span> {post._description}
+                </p>
+              )}
+
+              <Link style={{ marginBottom: "8px" }} to={`/p/${post.id}`}>
+                <span style={{ color: "#8e8e8e" }}>
+                  See all {post.comments.length} comments
+                </span>
               </Link>
-              <div style={{ marginTop: "8px" }}>
+              {/* <p style={{ marginBottom: "4px" }}>
+                <span>Jorge Washington</span> Comentário
+              </p>
+              <p>
+                <span>Jorge Washington</span> Comentário
+              </p> */}
+              <div style={{ color: "#8e8e8e", fontSize: "10px" }}>
                 {daysAgo ? (
-                  <p>{`${daysAgo} days ago`}</p>
+                  <p>{`${daysAgo} DAYS AGO`}</p>
                 ) : (
-                  <p>{`${hoursAgo} hours ago`}</p>
+                  <p>{`${hoursAgo} HOURS AGO`}</p>
                 )}
               </div>
             </div>

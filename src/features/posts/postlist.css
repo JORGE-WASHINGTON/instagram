@@ -186,7 +186,8 @@
 }
 
 .details-data {
-  color: #8e8e8e;
+  display: flex;
+  flex-direction: column;
 }
 
 .details-buttons {

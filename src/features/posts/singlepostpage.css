@@ -81,7 +81,7 @@
 .comment-list {
   flex-grow: 1;
   overflow-y: scroll;
-  height: calc(100% - 32px);
+  height: 335px;
 }
 
 .comment-list::-webkit-scrollbar {

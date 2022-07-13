@@ -35,11 +35,11 @@ export const fakeApi = createApi({
           console.log(data);
           dispatch(
             fakeApi.util.updateQueryData("getPosts", undefined, (draft) => {
-              draft[0].comments.push({
+              draft[body.postId - 1].comments.push({
                 comment_id: data.insertId,
                 comment_author: "smcilheran4",
                 comment_content: body.content,
-                comment_author_id: 5,
+                comment_author_id: body.user_id,
                 comment_author_avatar:
                   "https://robohash.org/teneturquibusdamducimus.png?size=50x50&set=set1",
               });
