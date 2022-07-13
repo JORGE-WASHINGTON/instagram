@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./commentform.css";
 import CommentSpinner from "./CommentSpinner";
 
-const CommentForm = ({ postId }) => {
+const CommentForm = ({ postId, onCommentAdded }) => {
   const [comment, setComment] = useState("");
   const onCommentChange = (e) => {
     setComment(e.target.value);
@@ -17,6 +17,7 @@ const CommentForm = ({ postId }) => {
     if (comment) {
       addComment({ postId: postId, user_id: 5, content: comment });
       setComment("");
+      onCommentAdded({ user: "my name", content: comment });
     }
   };
 

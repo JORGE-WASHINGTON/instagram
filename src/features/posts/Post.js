@@ -10,7 +10,11 @@ import PostMedia from "../../components/PostMedia";
 
 export const Post = ({ id }) => {
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [addedComments, setAddedComments] = useState([]);
 
+  const onCommentAdded = (newcomment) => {
+    setAddedComments([...addedComments, newcomment]);
+  };
   const { post } = fakeApi.useGetPostsQuery(undefined, {
     selectFromResult: ({ data }) => ({
       post: data?.find((post) => post.id === id),
@@ -107,6 +111,12 @@ export const Post = ({ id }) => {
                   See all {post.comments.length} comments
                 </span>
               </Link>
+              {addedComments.length > 0 &&
+                addedComments.map((comment) => (
+                  <p style={{ marginBottom: "4px" }}>
+                    <span>{comment.user}</span> {comment.content}
+                  </p>
+                ))}
               {/* <p style={{ marginBottom: "4px" }}>
                 <span>Jorge Washington</span> Comentário
               </p>
@@ -122,7 +132,7 @@ export const Post = ({ id }) => {
               </div>
             </div>
           </div>
-          <CommentForm postId={post.id} />
+          <CommentForm postId={post.id} onCommentAdded={onCommentAdded} />
         </article>
       )}
     </>
