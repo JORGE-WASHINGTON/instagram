@@ -29,7 +29,26 @@ export const fakeApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(data);
+          dispatch(
+            fakeApi.util.updateQueryData("getPosts", undefined, (draft) => {
+              draft[0].comments.push({
+                comment_id: data.insertId,
+                comment_author: "smcilheran4",
+                comment_content: body.content,
+                comment_author_id: 5,
+                comment_author_avatar:
+                  "https://robohash.org/teneturquibusdamducimus.png?size=50x50&set=set1",
+              });
+            })
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      },
     }),
     /* getUsers: builder.query({
       query: () => "/users",
