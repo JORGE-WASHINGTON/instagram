@@ -20,6 +20,73 @@ export const fakeApi = createApi({
           : // an error occurred, but we still want to refetch this query when `{ type: 'Posts', id: 'LIST' }` is invalidated
             [{ type: "Posts", id: "LIST" }],
     }),
+    addLike: builder.mutation({
+      query: (body) => {
+        return {
+          url: `/likes/${body.postId}/like`,
+          headers: { "Content-type": "application/json" },
+          method: "POST",
+          body,
+        };
+      },
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        console.log("started");
+        // When we start the request, just immediately update the cache
+        const patchResult = dispatch(
+          fakeApi.util.updateQueryData("getPosts", undefined, (draft) => {
+            console.log(draft);
+            if (draft[body.postId - 1].likes === null) {
+              draft[body.postId - 1].likes = [];
+              draft[body.postId - 1].likes.push({
+                post_id: body.postId,
+                like_author_id: body.user_id,
+              });
+            } else {
+              draft[body.postId - 1].likes.push({
+                post_id: body.postId,
+                like_author_id: body.user_id,
+              });
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
+    }),
+    removeLike: builder.mutation({
+      query: (body) => {
+        return {
+          url: `/likes/${body.postId}/unlike`,
+          headers: { "Content-type": "application/json" },
+          method: "POST",
+          body,
+        };
+      },
+      async onQueryStarted(body, { dispatch, queryFulfilled }) {
+        console.log("started");
+        // When we start the request, just immediately update the cache
+        const patchResult = dispatch(
+          fakeApi.util.updateQueryData("getPosts", undefined, (draft) => {
+            console.log(draft);
+            const found = draft[body.postId - 1].likes.find(
+              (el) => el.like_author_id === body.user_id
+            );
+            const index = draft[body.postId - 1].likes.indexOf(found);
+            if (index > -1) {
+              draft[body.postId - 1].likes.splice(index, 1);
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
+    }),
     addComment: builder.mutation({
       query: (body) => {
         return {
@@ -98,4 +165,9 @@ export const fakeApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPostsQuery, useAddCommentMutation } = fakeApi;
+export const {
+  useGetPostsQuery,
+  useAddCommentMutation,
+  useAddLikeMutation,
+  useRemoveLikeMutation,
+} = fakeApi;

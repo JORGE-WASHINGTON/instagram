@@ -1,39 +1,30 @@
-/* import {
+import {
   useAddLikeMutation,
+  fakeApi,
   useRemoveLikeMutation,
 } from "../features/apiSlice/apiSlice";
-import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 
-const LikeButton = ({ postId, postLikes }) => {
-  const currentUser = 8;
+const LikeButton = ({ postId }) => {
+  const currentUser = 5;
+
+  const { isLiked } = fakeApi.useGetPostsQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      isLiked: data?.[postId - 1].likes?.find(
+        (like) => like.like_author_id === 5
+      ),
+    }),
+  });
 
   const [addLike] = useAddLikeMutation();
-  const [removeLike, isLoading] = useRemoveLikeMutation();
-
-  const like = postLikes?.find((like) => like.user === currentUser);
-
-  console.log(like ? true : false, postId);
-
-  const [isLiked, setIsLiked] = useState(null);
-
-  useEffect(() => {
-    if (like) {
-      setIsLiked(true);
-    }
-  }, [like]);
+  const [removeLike] = useRemoveLikeMutation();
 
   return (
     <button
       className="like-icon"
       onClick={() => {
-        if (isLiked) {
-          removeLike({ likeId: like.id, postId: postId });
-          setIsLiked(false);
-        } else {
-          addLike({ id: uuidv4(), user: currentUser, postId: postId });
-          setIsLiked(true);
-        }
+        isLiked
+          ? removeLike({ user_id: currentUser, postId: postId })
+          : addLike({ user_id: currentUser, postId: postId });
       }}
     >
       <span>
@@ -51,4 +42,3 @@ const LikeButton = ({ postId, postLikes }) => {
 };
 
 export default LikeButton;
- */

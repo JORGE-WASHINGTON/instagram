@@ -43,11 +43,11 @@ export const Post = ({ id }) => {
           <PostMedia media={post.media} postId={post.id} />
           <div className="post-details">
             <div className="details-buttons">
-              {/* <LikeButton
+              <LikeButton
                 postId={post.id}
-                postLikes={postLikes}
-                onAdd={addLike}
-              /> */}
+                /* postLikes={postLikes} */
+                /* onAdd={addLike} */
+              />
               <button className="like-icon">
                 <Link to={`/p/${id}`}>
                   <svg
@@ -111,12 +111,12 @@ export const Post = ({ id }) => {
                   See all {post.comments.length} comments
                 </span>
               </Link>
-              {addedComments.length > 0 &&
+              {/* {addedComments.length > 0 &&
                 addedComments.map((comment) => (
                   <p style={{ marginBottom: "4px" }}>
                     <span>{comment.user}</span> {comment.content}
                   </p>
-                ))}
+                ))} */}
               {/* <p style={{ marginBottom: "4px" }}>
                 <span>Jorge Washington</span> Comentário
               </p>
